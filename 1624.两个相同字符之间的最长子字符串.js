@@ -10,17 +10,16 @@
  * @return {number}
  */
 var maxLengthBetweenEqualCharacters = function (s) {
-  const map = new Map();
+  const firstIndex = new Array(26).fill(-1);
+  let max = -1;
   for (let i = 0; i < s.length; i++) {
-    if (map.has(s[i])) {
-      map.set(s[i], [map.get(s[i])[0], i - map.get(s[i])[0] - 1, true]);
+    let index = firstIndex[s[i].charCodeAt() - "a".charCodeAt()];
+    if (index < 0) {
+      firstIndex[s[i].charCodeAt() - "a".charCodeAt()] = i;
     } else {
-      map.set(s[i], [i, 0, false]); // 最早索引,长度,是否闭合
+      max = Math.max(max, i - index - 1);
     }
   }
-  let res = [...map.values()]
-    .filter((item) => item[2])
-    .sort((a, b) => b[1] - a[1])[0];
-  return res ? res[1] : -1;
+  return max;
 };
 // @lc code=end
