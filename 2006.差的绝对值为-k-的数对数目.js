@@ -10,18 +10,14 @@
  * @param {number} k
  * @return {number}
  */
+
 var countKDifference = function (nums, k) {
   let count = 0;
+  const map = new Map();
   for (let i = 0; i < nums.length; i++) {
-    for (let j = 0; j < nums.length; j++) {
-      if (nums[j] - nums[i] === k) {
-        count++;
-      }
-    }
+    count += (map.get(nums[i] - k) || 0) + (map.get(nums[i] + k) || 0);
+    map.set(nums[i], (map.get(nums[i]) || 0) + 1);
   }
   return count;
 };
-const nums = [3, 2, 1, 5, 4],
-  k = 2;
-console.log(countKDifference(nums, k));
 // @lc code=end
