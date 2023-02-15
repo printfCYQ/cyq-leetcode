@@ -10,19 +10,15 @@
  * @return {number}
  */
 var subtractProductAndSum = function (n) {
-  let arr = n.toString().split("");
-  return mul(arr) - sum(arr);
+  if (n === 0) return 0;
+  let sum = 0,
+    product = 1;
+  while (n) {
+    let bit = n % 10;
+    n = Math.floor(n / 10);
+    sum += bit;
+    product *= bit;
+  }
+  return product - sum;
 };
-
-var sum = (arr) => {
-  return arr.reduce((pre, item) => {
-    return pre + Number(item);
-  }, 0);
-};
-const mul = (arr) => {
-  return arr.reduce((pre, item) => {
-    return pre * Number(item);
-  }, 1);
-};
-console.log(subtractProductAndSum(234));
 // @lc code=end
