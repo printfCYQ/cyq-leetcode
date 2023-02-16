@@ -10,26 +10,21 @@
  * @return {number}
  */
 var numberOfBeams = function (bank) {
-  let res = 0;
+  let result = 0;
+  let prev = 0; // 上一行个数
+  let current = 0; // 当前行个数
   for (let i = 0; i < bank.length; i++) {
-    let isAllZero = bank[i].split("").every((item) => item === "0");
-    if (isAllZero) {
-      bank.splice(i, 1);
-      i--;
+    let item = bank[i]; // 当前行
+    current = 0;
+    for (let j = 0; j < item.length; j++) {
+      if (item[j] === "1") current++;
     }
+    if (current === 0) continue; // 当前行没有，跳过
+    if (prev > 0) {
+      result += prev * current;
+    }
+    prev = current;
   }
-  for (let i = 0; i < bank.length - 1; i++) {
-    let x = filterOne(bank[i]);
-    let y = filterOne(bank[i + 1]);
-    res += x.length * y.length;
-  }
-  return res;
-};
-
-var filterOne = function (str) {
-  return str
-    .split("")
-    .filter((item) => item === "1")
-    .join("");
+  return result;
 };
 // @lc code=end
