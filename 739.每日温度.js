@@ -10,16 +10,18 @@
  * @return {number[]}
  */
 var dailyTemperatures = function (temperatures) {
-  let res = [];
+  const stack = []; // 栈
+  const res = new Array(temperatures.length).fill(0);
   for (let i = 0; i < temperatures.length; i++) {
-    let temp = 0;
-    for (let j = i + 1; j < temperatures.length; j++) {
-      if (temperatures[j] > temperatures[i]) {
-        temp = j - i;
-        break;
-      }
+    // 当栈内有元素时 && 当前温度是否大于栈顶元素，【更新结果数组，栈顶元素出栈】
+    while (
+      stack.length > 0 &&
+      temperatures[i] > temperatures[stack[stack.length - 1]]
+    ) {
+      res[stack[stack.length - 1]] = i - stack[stack.length - 1];
+      stack.pop();
     }
-    res.push(temp);
+    stack.push(i); // 将当前元素入栈
   }
   return res;
 };
