@@ -11,12 +11,19 @@
  * @return {number[][]}
  */
 var sortTheStudents = function (score, k) {
-  return score.sort((a, b) => b[k] - a[k]);
+  const obj = {};
+  for (let item of score) {
+    obj[item[k]]
+      ? (obj[item[k]] = [...obj[item[k]], item])
+      : (obj[item[k]] = [item]);
+  }
+  return Object.values(obj).flat(1).reverse();
 };
 const score = [
-    [3, 4],
-    [5, 6],
+    [10, 6, 9, 1],
+    [7, 5, 11, 2],
+    [4, 8, 3, 15],
   ],
-  k = 0;
+  k = 2;
 console.log(sortTheStudents(score, k));
 // @lc code=end
